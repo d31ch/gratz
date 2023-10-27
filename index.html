@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Поздравление</title>
+    <style>
+        body {
+            background-image: url('1.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            overflow: hidden; /* Ограничиваем видимую область экрана */
+            opacity: 0.7; /* Уменьшаем непрозрачность фонового изображения */
+        }
+        .message {
+            text-align: center;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+        }
+        .star {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #ffd700; /* Золотистый цвет */
+            clip-path: polygon(50% 0%, 61.8% 38.2%, 100% 45.1%, 69.1% 69.1%, 80.3% 100%, 50% 82.6%, 19.7% 100%, 30.9% 69.1%, 0% 45.1%, 38.2% 38.2%);
+            animation: twinkle 1s ease-out infinite;
+        }
+        @keyframes twinkle {
+            0%, 100% {
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+        /* Стили для всплывающего окна */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+        }
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+        }
+        /* Стиль для кнопки открытия модального окна */
+        .open-modal-button {
+            cursor: pointer;
+            color: blue;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="message">
+        <h1>С Днем Рождения!</h1>
+        <p>Дорогой друг, пусть этот день будет наполнен радостью и счастьем. Пусть сбудутся все твои мечты и желания. Счастья тебе и здоровья!</p>
+        <p>Щелкните <span class="open-modal-button">здесь</span>, чтобы открыть всплывающее окно с поздравлением.</p>
+    </div>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <h2>Поздравление</h2>
+            <p>Дорогой друг, поздравляем тебя с Днем Рождения! Пусть этот день принесет тебе много радости и счастья.</p>
+            <button onclick="closeModal()">Закрыть</button>
+        </div>
+    </div>
+    <script>
+        let canCreateStar = true; // Переменная для контроля частоты появления звезд
+        document.addEventListener("mousemove", (e) => {
+            if (canCreateStar) {
+                createStar(e.clientX, e.clientY);
+                canCreateStar = false;
+                setTimeout(() => {
+                    canCreateStar = true;
+                }, 100); // Задержка между созданием звезд (в миллисекундах)
+            }
+        });
+
+        function createStar(x, y) {
+            const star = document.createElement("div");
+            star.className = "star";
+            star.style.left = x + "px";
+            star.style.top = y + "px";
+            document.body.appendChild(star);
+
+            star.addEventListener("animationiteration", () => {
+                star.remove();
+            });
+        }
+
+        function openModal() {
+            document.getElementById("myModal").style.display = "block";
+        }
+
+        function closeModal() {
+            document.getElementById("myModal").style.display = "none";
+        }
+
+        // Закрыть модальное окно, если пользователь щелкает за его пределами
+        window.addEventListener("click", (e) => {
+            if (e.target == document.getElementById("myModal")) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
